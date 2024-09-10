@@ -38,7 +38,7 @@ const getAuth2GoogleUrl = (req,res) => {
 
     console.log(final_url)
     res.redirect(final_url)      
-}s
+}
 
 const googleAuthCallBack = async (req, res, next) => {
     const { state } = req.query;
