@@ -10,6 +10,7 @@ import Join from './pages/join'
 import TakePicture from './pages/TakePicture';
 import GoogleCallBack from './pages/GoogleCallBack';
 import PrivacyPolicy from './pages/Confidentialite';
+import TermsOfUse from './pages/ConditionUtilisation';
 
 import withAuth from './components/withAuth';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path='/create' element={<ProtectedCreate />} />
         <Route path='/join' element={<ProtectedJoin/>} />
         <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
+        <Route path='/ConditionUtilisation' element={<TermsOfUse/>} />
         <Route path='*' element={<NoPage/>} />
       </Routes>
     </Router>
