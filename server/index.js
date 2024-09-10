@@ -27,6 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
+app.get('/test', (req, res, next) => res.send("Salut c'est la page de test !"))
 app.get('/getAuth2GoogleUrl/:whereGo', googleControllers.getAuth2GoogleUrl)
 app.get('/auth/google/callback', googleControllers.googleAuthCallBack, userControllers.addUser, authControllers.sendSessionToken);
 app.get('/userProfil', authControllers.isSessionValideMidlleware ,userControllers.sendUserProfil)
