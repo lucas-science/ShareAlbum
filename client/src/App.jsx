@@ -9,6 +9,7 @@ import Login from './pages/login'
 import Join from './pages/join'
 import TakePicture from './pages/TakePicture';
 import GoogleCallBack from './pages/GoogleCallBack';
+import PrivacyPolicy from './pages/Confidentialite';
 
 import withAuth from './components/withAuth';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/myHome/takePicture' element={<ProtectTakePicture/>} />
         <Route path='/create' element={<ProtectedCreate />} />
         <Route path='/join' element={<ProtectedJoin/>} />
+        <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
         <Route path='*' element={<NoPage/>} />
       </Routes>
     </Router>
