@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
       <h1 className="text-2xl font-bold mb-6 text-center">Politique de Confidentialité</h1>
 
       <p className="mb-4">
-        Votre confidentialité est importante pour nous. Cette politique explique comment <strong>[Nom de l'Application]</strong> collecte, utilise et protège les informations des utilisateurs.
+        Votre confidentialité est importante pour nous. Cette politique explique comment <strong>ShareAlbum</strong> collecte, utilise et protège les informations des utilisateurs.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">1. Données collectées :</h2>
@@ -42,7 +42,7 @@ const PrivacyPolicy = () => {
       </p>
 
       <p className="mt-6">
-        Pour toute question concernant notre politique de confidentialité, veuillez nous contacter à <strong>[email de support]</strong>.
+        Pour toute question concernant notre politique de confidentialité, veuillez nous contacter à <strong>lucaslhomme01@gmail.com</strong>.
       </p>
     </div>
   );
