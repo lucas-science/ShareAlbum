@@ -38,7 +38,7 @@ const getAuth2GoogleUrl = (req,res) => {
 
     console.log(final_url)
     res.redirect(final_url)      
-}
+}s
 
 const googleAuthCallBack = async (req, res, next) => {
     const { state } = req.query;
@@ -47,7 +47,7 @@ const googleAuthCallBack = async (req, res, next) => {
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      'http://localhost:8080/auth/google/callback'
+        `${process.env.SERVER_URL}/auth/google/callback`
     );
     const code = req.query.code;  // Extraction du code depuis la query string
     if (!code) {
