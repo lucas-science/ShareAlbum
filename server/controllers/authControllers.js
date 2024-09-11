@@ -15,10 +15,10 @@ const sendSessionToken = (req,res,next) => {
     const sessionToken = generateAccessToken({ userId });
     res.cookie('sessionToken', sessionToken, {
         httpOnly: true,
-        secure: false, // Devrait être false en développement HTTP
-        sameSite: 'Lax', // Peut être 'Lax' ou 'Strict', selon vos besoins
-        path: '/' // Assurez-vous que le chemin est correct
-      });
+        secure: process.env.NODE_ENV === "prod", // En production, avec HTTPS
+        sameSite: 'Lax', // Peut être 'Strict' selon vos besoins en termes de sécurité
+        path: '/' // Le chemin approprié pour vos besoins
+    });
     console.log(`${process.env.CLIENT_URL}/${redirectTo}`)
     if(redirectId){
         res.redirect(`${process.env.CLIENT_URL}/${redirectTo}?id=${redirectId}`)
