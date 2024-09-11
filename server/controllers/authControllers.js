@@ -19,7 +19,7 @@ const sendSessionToken = (req,res,next) => {
         redirectUrl = `${process.env.CLIENT_URL}/GetToken?redirectTo=${redirectTo}?id=${redirectId}?token=${sessionToken}`;
     }
 
-    res.redirect(`${process.env.CLIENT_URL}/${redirectUrl}`)
+    res.redirect(redirectUrl)
 }
 
 const isSessionValide = (req,res,next) => {
