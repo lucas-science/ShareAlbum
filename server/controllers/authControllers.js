@@ -13,10 +13,10 @@ const sendSessionToken = (req,res,next) => {
     console.log("redirectTo : ", redirectTo)
 
     const sessionToken = generateAccessToken({ userId });
-    let redirectUrl = `${process.env.CLIENT_URL}/GetToken&redirectTo=${redirectTo}&token=${sessionToken}`;
+    let redirectUrl = `${process.env.CLIENT_URL}/GetToken?redirectTo=${redirectTo}?token=${sessionToken}`;
 
     if(redirectId){
-        redirectUrl = `${process.env.CLIENT_URL}/GetToken&redirectTo=${redirectTo}&id=${redirectId}&token=${sessionToken}`;
+        redirectUrl = `${process.env.CLIENT_URL}/GetToken?redirectTo=${redirectTo}?id=${redirectId}?token=${sessionToken}`;
     }
 
     res.redirect(redirectUrl)
