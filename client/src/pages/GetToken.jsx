@@ -13,9 +13,12 @@ const GetToken = () => {
         const redirectTo = params.get('redirectTo');
         const id = params.get('id');
 
+        console.log('Params:', { token, redirectTo, id }); // Ajout de logs
+
         if (token) {
             Cookies.set('sessionToken', token, { secure: true, sameSite: 'None' });
             const redirectPath = id ? `/${redirectTo}?id=${id}` : `/${redirectTo}`;
+            console.log('Redirection vers :', redirectPath); // Ajout de logs
             navigate(redirectPath);
         } else {
             console.log("Pas de token trouvé");
