@@ -15,10 +15,11 @@ const sendSessionToken = (req,res,next) => {
     const sessionToken = generateAccessToken({ userId });
     res.cookie('sessionToken', sessionToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "prod", // En production, avec HTTPS
-        sameSite: 'Lax', // Peut être 'Strict' selon vos besoins en termes de sécurité
-        path: '/' // Le chemin approprié pour vos besoins
-    });
+        secure: true, // En production, sécurisé avec HTTPS
+        sameSite: 'None', // Nécessaire pour permettre les cookies cross-origin
+        path: '/', // Le chemin approprié
+        domain: 'share-album-omega.vercel.app', // Domaine du client sur Vercel
+      });
     console.log(`${process.env.CLIENT_URL}/${redirectTo}`)
     if(redirectId){
         res.redirect(`${process.env.CLIENT_URL}/${redirectTo}?id=${redirectId}`)
