@@ -7,6 +7,8 @@ const GetToken = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    console.log('Composant GetToken monté'); // Test direct
+
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
