@@ -10,21 +10,17 @@ const GetToken = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
-        const redirectTo = params.get('redirectTo')
+        const redirectTo = params.get('redirectTo');
         const id = params.get('id');
-        
+
         if (token) {
             Cookies.set('sessionToken', token, { secure: true, sameSite: 'None' });
-            if (id) {
-                console.log('ID reçu :', id);
-                navigate(`/${redirectTo}?id=${id}`)
-            }
-            navigate(`/${redirectTo}`)
+            const redirectPath = id ? `/${redirectTo}?id=${id}` : `/${redirectTo}`;
+            navigate(redirectPath);
         } else {
-            console.log("Pas de token trouvé")
-            navigate('/404')
+            console.log("Pas de token trouvé");
+            navigate('/404');
         }
-
     }, [location, navigate]);
 
     return (
@@ -33,6 +29,5 @@ const GetToken = () => {
         </div>
     );
 };
-
 
 export default GetToken;
