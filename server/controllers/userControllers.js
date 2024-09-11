@@ -19,16 +19,17 @@ const addUserToBDD = (userData) => {
         try {
             console.log("User Data:", userData);
 
-            // Vérification des champs requis
-            if (!userData.userId || !userData.name || !userData.email || !userData.pictureUrl || !userData.refreshToken) {
-                return reject({ message: 'Les données utilisateur sont incomplètes.', status: 400 });
-            }
-
+            
             const existingUser = await User.findOne({ userId: userData.userId });
             if (existingUser) {
                 return resolve({ message: 'Utilisateur déjà existant.', user: existingUser, status: 200 });
             }
-
+            
+            // Vérification des champs requis
+            if (!userData.userId || !userData.name || !userData.email || !userData.pictureUrl || !userData.refreshToken) {
+                return reject({ message: 'Les données utilisateur sont incomplètes.', status: 400 });
+            }
+            
             const newUser = new User({
                 userId: userData.userId,
                 name: userData.name,

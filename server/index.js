@@ -20,7 +20,7 @@ mongoose.connect(`mongodb+srv://lucaslhomme01:${process.env.MONGO_DB_MDP}@cluste
   .then(() => console.log('Connected!'));
 
 app.use(cors({
-  origin: '*',
+  origin: process.env.CLIENT_URL,
   credentials: true
 }))
 app.use(express.json());
