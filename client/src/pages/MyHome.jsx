@@ -141,13 +141,13 @@ const MyHome = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8">
       
       {/* Section contenant le titre et le bouton "Partager" */}
-      <div className="w-4/5 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
+      <div className="w-5/6 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
         <img 
           src={profilUrl} 
           alt="Profil" 
-          className="rounded-full w-1/6 h-auto"
+          className="rounded-full w-1/7 h-auto"
         />
-        <h1 className="text-3xl font-bold text-gray-800">{albumName}</h1>
+        <h1 className="text-lg md:text-xl font-bold text-gray-800">{albumName}</h1>
         <button
           onClick={() => setShowQR(true)}
           className="bg-green-500 text-white text-lg py-3 px-6 rounded-lg shadow-lg"
