@@ -77,6 +77,7 @@ const MyHome = () => {
       }
 
       const data = await response.json();
+      console.log(data)
       setProfilUrl(data.pictureUrl);
       console.log(profilUrl)
     } catch (err) {
