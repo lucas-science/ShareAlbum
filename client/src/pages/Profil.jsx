@@ -88,12 +88,12 @@ const Profil = () => {
         </h1>
 
         {/* Affichage des albums */}
-        <div className="text-left w-full flex flex-col">
+        <div className="text-left w-full ">
           <h2 className="text-xl font-bold text-gray-800 mb-2">
             Albums
           </h2>
           {userProfil.albums && Object.keys(userProfil.albums).length > 0 ? (
-            <div className="space-y-2">
+            <div className="space-y-2 flex flex-col">
               {Object.keys(userProfil.albums).map(albumIndex => {
                 const album = userProfil.albums[albumIndex];
                 const isHovered = hoveredAlbum === album.albumId;
