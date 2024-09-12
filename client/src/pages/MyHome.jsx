@@ -145,7 +145,7 @@ const MyHome = () => {
         <img 
           src={profilUrl} 
           alt="Profil" 
-          className="rounded-full w-1/7 h-auto"
+          className="rounded-full w-1/6 h-auto"
         />
         <h1 className="text-lg md:text-xl font-bold text-gray-800">{albumName}</h1>
         <button
