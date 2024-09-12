@@ -143,7 +143,7 @@ const MyHome = () => {
       {/* Section contenant le titre et le bouton "Partager" */}
       <div className="w-2/3 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
         <img 
-          src={profilUrl.pictureUrl} 
+          src={profilUrl} 
           alt="Profil" 
           className="rounded-full w-20 h-20"
         />
