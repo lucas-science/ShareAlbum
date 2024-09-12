@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function TakePicture() {
   const [searchParams] = useSearchParams();
@@ -13,6 +14,8 @@ function TakePicture() {
   const canvasRef = useRef(null);
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(null); // Etat pour gérer les erreurs
+  const sessionToken = Cookies.get('sessionToken')
+
 
   useEffect(() => {
     const checkMobile = () => {
@@ -74,6 +77,10 @@ function TakePicture() {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/sendPhoto`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
+        },
         body: formData,
       });
 

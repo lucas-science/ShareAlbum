@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Profil = () => {
   const [userProfil, setUserProfil] = useState(null);  // État pour stocker les données utilisateur
   const [hoveredAlbum, setHoveredAlbum] = useState(null); // État pour suivre l'album survolé
   const navigate = useNavigate(); // Hook pour la navigation
+  const sessionToken = Cookies.get('sessionToken')
 
   useEffect(() => {
     fetchUserProfil(); // Appeler la fonction pour récupérer les données
@@ -14,9 +16,10 @@ const Profil = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/userProfil`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': sessionToken,
+      },
         credentials: 'include',
       });
 
@@ -43,6 +46,7 @@ const Profil = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
         },
         credentials: 'include',
         body: JSON.stringify({ albumId }),

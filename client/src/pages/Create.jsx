@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Create = () => {
   const [HomeName, setHomeName] = useState('');
@@ -7,6 +8,7 @@ const Create = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate(); // Hook pour la navigation
+  const sessionToken = Cookies.get('sessionToken')
 
   // Affiche le message d'erreur pendant 3 secondes
   const showErrorMessage = (message) => {
@@ -30,6 +32,7 @@ const Create = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': sessionToken,
       },
       body: JSON.stringify({ HomeName }),
       credentials: 'include',

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate} from 'react-router-dom';
 import { QRCodeCanvas } from 'qrcode.react';  // Importer la librairie QRCode
 import jsPDF from 'jspdf';  // Importer jsPDF
+import Cookies from 'js-cookie';
 
 const MyHome = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ const MyHome = () => {
   const [error, setError] = useState('');
   const fileInputRef = useRef(null); // Référence pour l'input de fichier
   const [showQR, setShowQR] = useState(false);  // État pour afficher ou cacher le pop-up QR
+  const sessionToken = Cookies.get('sessionToken')
 
   const fetchPhotos = async () => {
     try {
@@ -74,6 +76,10 @@ const MyHome = () => {
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/sendPhoto`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
+        },
         method: 'POST',
         body: formData,
         credentials: 'include',
