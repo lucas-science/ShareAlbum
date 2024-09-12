@@ -8,6 +8,14 @@ const axios = require('axios');
 
 const app = express();
 
+const googleControllers = require('./controllers/googleControllers')
+const userControllers = require('./controllers/userControllers')
+const authControllers = require('./controllers/authControllers')
+const homeAlbumControllers = require('./controllers/homeAlbumControllers')
+const driveControllers = require('./controllers/driveControllers')
+
+
+
 // Connection à MongoDB
 mongoose.connect(`mongodb+srv://lucaslhomme01:${process.env.MONGO_DB_MDP}@cluster0.7jxz1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
   .then(() => console.log('Connected!'));
