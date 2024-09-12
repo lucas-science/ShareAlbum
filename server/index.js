@@ -1,20 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const path = require('path');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 
 const app = express();
 
-const googleControllers = require('./controllers/googleControllers')
-const userControllers = require('./controllers/userControllers')
-const authControllers = require('./controllers/authControllers')
-const homeAlbumControllers = require('./controllers/homeAlbumControllers')
-const driveControllers = require('./controllers/driveControllers')
-
-
+const googleControllers = require('./controllers/googleControllers');
+const userControllers = require('./controllers/userControllers');
+const authControllers = require('./controllers/authControllers');
+const homeAlbumControllers = require('./controllers/homeAlbumControllers');
+const driveControllers = require('./controllers/driveControllers');
 
 // Connection à MongoDB
 mongoose.connect(`mongodb+srv://lucaslhomme01:${process.env.MONGO_DB_MDP}@cluster0.7jxz1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
@@ -26,29 +23,31 @@ app.use(cors({
   credentials: true,
 }));
 
-// Configurer body-parser pour accepter de grandes requêtes
-app.use(express.json({ limit: '50mb' })); // Augmenter la limite de taille des requêtes JSON
-app.use(express.urlencoded({ limit: '50mb', extended: true })); // Pour form-data
-
-app.use(cookieParser());
-
 // Configuration de multer pour accepter des fichiers jusqu'à 50MB
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 }, // Limite de 50MB
 });
 
+// Middleware pour le traitement des fichiers (appliqué uniquement aux routes qui traitent les fichiers)
+app.use('/sendPhoto', upload.single('photo'));
+
+// Configurer body-parser pour accepter de grandes requêtes JSON
+app.use(express.json({ limit: '50mb' })); // Augmenter la limite de taille des requêtes JSON
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Pour form-data
+
+app.use(cookieParser());
+
 // Routes
-app.post('/sendPhoto', upload.single('photo'), driveControllers.sendPhoto);
+app.post('/sendPhoto', driveControllers.sendPhoto);
 
-
-app.get('/test', (req, res, next) => res.send("Salut c'est la page de test !"))
-app.get('/getAuth2GoogleUrl/:whereGo', googleControllers.getAuth2GoogleUrl)
+app.get('/test', (req, res) => res.send("Salut c'est la page de test !"));
+app.get('/getAuth2GoogleUrl/:whereGo', googleControllers.getAuth2GoogleUrl);
 app.get('/auth/google/callback', googleControllers.googleAuthCallBack, userControllers.addUser, authControllers.sendSessionToken);
-app.get('/userProfil', authControllers.isSessionValideMidlleware ,userControllers.sendUserProfil)
-app.get('/isAlbumCreator', userControllers.isAlbumCreator)
-app.get('/getAlbuminfos/:albumId', authControllers.isSessionValideMidlleware, homeAlbumControllers.getAlbumInfos )
-app.get('/getPhoto/:albumId',authControllers.isSessionValideMidlleware, driveControllers.getPhotosFromAlbum)
+app.get('/userProfil', authControllers.isSessionValideMidlleware, userControllers.sendUserProfil);
+app.get('/isAlbumCreator', userControllers.isAlbumCreator);
+app.get('/getAlbuminfos/:albumId', authControllers.isSessionValideMidlleware, homeAlbumControllers.getAlbumInfos);
+app.get('/getPhoto/:albumId', authControllers.isSessionValideMidlleware, driveControllers.getPhotosFromAlbum);
 app.get('/image-proxy', async (req, res) => {
   try {
     const { id } = req.query;
@@ -62,38 +61,11 @@ app.get('/image-proxy', async (req, res) => {
   }
 });
 
-app.delete('/deleteAlbum',authControllers.isSessionValideMidlleware, userControllers.isAlbumCreatorMiddelware, driveControllers.deleteFolder, homeAlbumControllers.deleteAlbum, userControllers.deleteAlbumFromUser)
-app.post('/auth', authControllers.isSessionValide)
-app.post('/createNewHomeAlbum', authControllers.isSessionValideMidlleware, homeAlbumControllers.createNewHomeAlbum, driveControllers.isFolderAlreadyHere)
-app.post('/sendPhoto', upload.single('photo'), driveControllers.sendPhoto);
+app.delete('/deleteAlbum', authControllers.isSessionValideMidlleware, userControllers.isAlbumCreatorMiddelware, driveControllers.deleteFolder, homeAlbumControllers.deleteAlbum, userControllers.deleteAlbumFromUser);
+app.post('/auth', authControllers.isSessionValide);
+app.post('/createNewHomeAlbum', authControllers.isSessionValideMidlleware, homeAlbumControllers.createNewHomeAlbum, driveControllers.isFolderAlreadyHere);
 
-// Route POST pour envoyer un fichier texte
-/*
-app.get('/sendphoto', async (req, res) => {
-  try {
-    const { refreshToken, fileName } = {refreshToken : '1//03kyuNLYfmlw3CgYIARAAGAMSNwF-L9IrRS5m2nLhqBWYWA7dC-SpA3LU1anOWi9b4PwOP_Ed_glttw-LW9ovlTN_DjNGf2EzJc4', fileName: 'test.txt'}; // Récupérer le refresh_token et le nom de fichier depuis la requête
-
-    const filePath = path.join(__dirname, fileName); // Chemin du fichier texte local
-
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).send({ success: false, error: 'Fichier non trouvé' });
-    }
-
-    // Obtenir le client OAuth2 avec le refresh token
-    const oauth2Client = getOAuth2ClientWithRefreshToken(refreshToken);
-
-    // Télécharger le fichier dans Google Drive
-    const fileId = await uploadFileToDrive(oauth2Client, filePath, fileName);
-
-    res.status(200).send({ success: true, fileId: fileId });
-  } catch (error) {
-    console.error('Error in /sendphoto route:', error);
-    res.status(500).send({ success: false, error: 'Erreur lors de l\'upload du fichier texte' });
-  }
-});
-*/
-
-
+// D'autres routes peuvent aller ici
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
