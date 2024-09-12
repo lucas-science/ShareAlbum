@@ -78,7 +78,6 @@ function TakePicture() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/sendPhoto`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'x-access-token': sessionToken,
         },
         body: formData,
