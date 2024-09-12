@@ -78,6 +78,7 @@ const MyHome = () => {
 
       const data = await response.json();
       setProfilUrl(data.pictureUrl);
+      console.log(profilUrl)
     } catch (err) {
       console.error('Erreur :', err);
       setError('Impossible de récupérer les informations de l\'utilisateur.');
