@@ -120,6 +120,9 @@ const Profil = () => {
                   </div>
                 );
               })}
+              <button onClick={() => navigate('/create')} className='mt-5 p-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
+                Créer un album
+              </button>
             </div>
           ) : (
             <div className='flex flex-col justify-around items-center'>
