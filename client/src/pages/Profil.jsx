@@ -120,7 +120,7 @@ const Profil = () => {
                   </div>
                 );
               })}
-              <button onClick={() => navigate('/create')} className='mt-5 p-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
+              <button onClick={() => navigate('/create')} className='mt-15 w-3/5 p-2 bg-blue-500 text-white rounded hover:bg-blue-600'>
                 Créer un album
               </button>
             </div>
