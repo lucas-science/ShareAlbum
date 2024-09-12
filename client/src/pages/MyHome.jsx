@@ -141,11 +141,11 @@ const MyHome = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8">
       
       {/* Section contenant le titre et le bouton "Partager" */}
-      <div className="w-2/3 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
+      <div className="w-4/5 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
         <img 
           src={profilUrl} 
           alt="Profil" 
-          className="rounded-full w-20 h-20"
+          className="rounded-full w-1/6 h-auto"
         />
         <h1 className="text-3xl font-bold text-gray-800">{albumName}</h1>
         <button
