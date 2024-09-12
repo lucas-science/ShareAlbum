@@ -124,7 +124,7 @@ const Profil = () => {
           ) : (
             <>
               <p className="text-gray-500">Pas d'albums créés</p>
-              <button onClick={() => navigate('/create')}>
+              <button onClick={() => navigate('/create')} className='bg-blue-500 text-white rounded hover:bg-blue-600'>
                 Créer un album
               </button>
             </>
