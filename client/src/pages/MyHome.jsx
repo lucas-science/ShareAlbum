@@ -11,7 +11,7 @@ const MyHome = () => {
   const [albumName, setAlbumName] = useState('');
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState('');
-  const fileInputRef = useRef(null); // Référence pour l'input de fichier
+  const [profilUrl, setProfilUrl] = useState('')
   const [showQR, setShowQR] = useState(false);  // État pour afficher ou cacher le pop-up QR
   const sessionToken = Cookies.get('sessionToken')
 
@@ -61,8 +61,32 @@ const MyHome = () => {
     }
   };
 
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/userProfil`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
+        },
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des informations de l\'utilisateur');
+      }
+
+      const data = await response.json();
+      setProfilUrl(data.pictureUrl);
+    } catch (err) {
+      console.error('Erreur :', err);
+      setError('Impossible de récupérer les informations de l\'utilisateur.');
+    }
+  }
+
   useEffect(() => {
     if (albumId) {
+      fetchUserInfo()
       fetchAlbumInfo();
       fetchPhotos();
     }
@@ -116,6 +140,11 @@ const MyHome = () => {
       
       {/* Section contenant le titre et le bouton "Partager" */}
       <div className="w-2/3 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
+        <img 
+          src={profilUrl.pictureUrl} 
+          alt="Profil" 
+          className="rounded-full w-20 h-20"
+        />
         <h1 className="text-3xl font-bold text-gray-800">{albumName}</h1>
         <button
           onClick={() => setShowQR(true)}
