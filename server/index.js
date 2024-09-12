@@ -1,31 +1,37 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors')
-const fs = require('fs');
-const multer = require('multer'); // Importer multer
+const cors = require('cors');
+const multer = require('multer');
 const path = require('path');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 
 const app = express();
 
-const googleControllers = require('./controllers/googleControllers')
-const userControllers = require('./controllers/userControllers')
-const authControllers = require('./controllers/authControllers')
-const homeAlbumControllers = require('./controllers/homeAlbumControllers')
-const driveControllers = require('./controllers/driveControllers')
-
+// Connection à MongoDB
 mongoose.connect(`mongodb+srv://lucaslhomme01:${process.env.MONGO_DB_MDP}@cluster0.7jxz1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
   .then(() => console.log('Connected!'));
 
+// CORS configuration
 app.use(cors({
   origin: process.env.CLIENT_URL,
-  credentials: true
-}))
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+  credentials: true,
+}));
+
+// Configurer body-parser pour accepter de grandes requêtes
+app.use(express.json({ limit: '50mb' })); // Augmenter la limite de taille des requêtes JSON
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Pour form-data
+
 app.use(cookieParser());
+
+// Configuration de multer pour accepter des fichiers jusqu'à 50MB
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 }, // Limite de 50MB
+});
+
+// Routes
+app.post('/sendPhoto', upload.single('photo'), driveControllers.sendPhoto);
 
 
 app.get('/test', (req, res, next) => res.send("Salut c'est la page de test !"))
