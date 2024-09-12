@@ -150,7 +150,7 @@ const MyHome = () => {
         <h1 className="text-lg md:text-xl font-bold text-gray-800">{albumName}</h1>
         <button
           onClick={() => setShowQR(true)}
-          className="bg-green-500 text-white text-lg py-3 px-6 rounded-lg shadow-lg"
+          className="bg-green-500 text-white text-lg py-2 px-4 rounded-lg shadow-lg"
         >
           Partager
         </button>
