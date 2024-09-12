@@ -21,6 +21,7 @@ const MyHome = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
         },
         credentials: 'include',
       });
@@ -43,6 +44,7 @@ const MyHome = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
         },
         credentials: 'include',
       });
