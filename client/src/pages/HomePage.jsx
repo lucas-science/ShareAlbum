@@ -21,11 +21,6 @@ class HomePage extends Component {
               Create your Home Album
             </button>
           </a>
-          <a href={this.join_url}>
-            <button className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              Join an Album
-            </button>
-          </a>
           <a href={this.profil_url}>
             <button className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
               Your profil
