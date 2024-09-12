@@ -88,7 +88,7 @@ const Profil = () => {
         </h1>
 
         {/* Affichage des albums */}
-        <div className="text-left w-full">
+        <div className="text-left w-full flex flex-col">
           <h2 className="text-xl font-bold text-gray-800 mb-2">
             Albums
           </h2>
