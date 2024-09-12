@@ -122,7 +122,12 @@ const Profil = () => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500">Pas d'albums créés</p>
+            <>
+              <p className="text-gray-500">Pas d'albums créés</p>
+              <button onClick={() => navigate('/create')}>
+                Créer un album
+              </button>
+            </>
           )}
         </div>
       </div>
