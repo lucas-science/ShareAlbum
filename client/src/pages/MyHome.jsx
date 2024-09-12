@@ -142,11 +142,13 @@ const MyHome = () => {
       
       {/* Section contenant le titre et le bouton "Partager" */}
       <div className="w-5/6 md:w-1/3 max-w-5xl flex justify-between   items-center px-4 mb-6">
-        <img 
-          src={profilUrl} 
-          alt="Profil" 
-          className="rounded-full w-1/6 h-auto"
-        />
+        <button onClick={() => navigate('/profil')}>
+          <img 
+            src={profilUrl} 
+            alt="Profil" 
+            className="rounded-full w-1/6 h-auto"
+          />
+        </button>
         <h1 className="text-lg md:text-xl font-bold text-gray-800">{albumName}</h1>
         <button
           onClick={() => setShowQR(true)}
