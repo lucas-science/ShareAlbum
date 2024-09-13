@@ -69,7 +69,11 @@ const Profil = () => {
 
   if (!userProfil) {
     // Si les données ne sont pas encore chargées
-    return <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-gray-200 rounded-full animate-spin"></div>;
+    return (
+      <div className="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-gray-200 rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
   return (

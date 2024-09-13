@@ -2,6 +2,7 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
+    <>
     <div className="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-md">
       <h1 className="text-2xl font-bold mb-6 text-center">Politique de Confidentialité de ShareAlbum</h1>
 
@@ -55,6 +56,10 @@ const PrivacyPolicy = () => {
         Pour toute question ou préoccupation concernant notre politique de confidentialité, veuillez nous contacter à <strong>lucaslhomme01@gmail.com</strong>.
       </p>
     </div>
+    <div className="bg-gray-100 flex items-center justify-center min-h-screen">
+      <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-gray-200 rounded-full animate-spin"></div>
+    </div>
+    </>
   );
 }
 
