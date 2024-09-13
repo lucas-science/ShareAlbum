@@ -42,9 +42,16 @@ export default function withAuth(ComponentToProtect) {
     }, [location.pathname]);
 
     if (loading) return (
-      <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-        <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-gray-200 rounded-full animate-spin"></div>
-      </div>
+      <div className="bg-gray-100 flex items-center justify-center min-h-screen space-x-4">
+      {/* Cercle 1 avec animation rapide */}
+      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-fast"></div>
+  
+      {/* Cercle 2 avec animation moyenne */}
+      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-medium"></div>
+  
+      {/* Cercle 3 avec animation lente */}
+      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-slow"></div>
+    </div>
     );
     if (redirect) return <Navigate to={redirectTo} />;
     return <ComponentToProtect {...props} />;
