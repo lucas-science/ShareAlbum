@@ -29,7 +29,7 @@ function GoogleCallBack() {
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center min-h-screen space-y-4">
       {loading ? ( // Afficher le loader tant que loading est true
-        <div className="loader">Chargement...</div>
+        <div className="w-12 h-12 border-4 border-t-4 border-blue-500 border-gray-200 rounded-full animate-spin"></div>
       ) : (
         <div>
           {data ? ( // Si les données sont reçues, les afficher
