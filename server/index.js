@@ -41,6 +41,7 @@ app.use(cookieParser());
 // Routes
 app.post('/sendPhoto', driveControllers.sendPhoto);
 
+app.get('/' (req, res) => res.send("SharePhoto server"))
 app.get('/test', (req, res) => res.send("Salut c'est la page de test !"));
 app.get('/getAuth2GoogleUrl/:whereGo', googleControllers.getAuth2GoogleUrl);
 app.get('/auth/google/callback', googleControllers.googleAuthCallBack, userControllers.addUser, authControllers.sendSessionToken);

@@ -31,8 +31,8 @@ class HomePage extends Component {
           {/* Footer */}
           <footer className="bg-gray-800 text-white py-4">
             <div className="container mx-auto text-center">
-              <a href="/ConditionUtilisation" className="text-gray-400 hover:text-white mx-4 underline-offset-auto hover:text-gray-300">Terms of Use</a>
-              <a href="/PrivacyPolicy" className="text-gray-400 hover:text-white mx-4 underline-offset-auto  hover:text-gray-300">Privacy Policy</a>
+              <a href="/ConditionUtilisation" className="text-gray-400 hover:text-white mx-4 underline-offset-auto">Terms of Use</a>
+              <a href="/PrivacyPolicy" className="text-gray-400 hover:text-white mx-4 underline-offset-auto  ">Privacy Policy</a>
             </div>
           </footer>
         </div>
