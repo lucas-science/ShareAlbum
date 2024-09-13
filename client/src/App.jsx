@@ -30,7 +30,7 @@ function App() {
         {/*<Route path='/auth/google/callback' element={<GoogleCallBack/>} />*/}
         <Route path='/profil' element={<ProtectedProfil/>} />
         <Route path='/myHome' element={<ProtectedMyHome/>} />
-        <Route path='/myHome/takePicture' element={<ProtectTakePicture/>} />
+        <Route path='/takePicture' element={<ProtectTakePicture/>} />
         <Route path='/create' element={<ProtectedCreate />} />
         <Route path='/join' element={<ProtectedJoin/>} />
         <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />

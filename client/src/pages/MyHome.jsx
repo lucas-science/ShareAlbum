@@ -124,7 +124,7 @@ const MyHome = () => {
   };
 
   const triggerFileSelect = () => {
-    navigate(`/myHome/takePicture?id=${albumId}`)
+    navigate(`/takePicture?id=${albumId}`)
   };
 
   // Générer le PDF contenant le QRCode
