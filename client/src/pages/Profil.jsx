@@ -80,7 +80,7 @@ const Profil = () => {
       });
 
       if (response.ok) {
-        // Rediriger après suppression du compte
+        Cookies.remove('sessionToken')
         navigate('/goodbye');
       } else {
         console.error('Erreur lors de la suppression du compte');
