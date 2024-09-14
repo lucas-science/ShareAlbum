@@ -3,6 +3,27 @@ const Album = require('../models/album');  // Assurez-vous que ce modèle est co
 const jwt = require('jsonwebtoken');
 
 
+const revokeGoogleToken = async (refreshToken) => {
+    try {
+      const response = await fetch('https://oauth2.googleapis.com/revoke', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `token=${refreshToken}`, // Inclure le refresh token dans le corps de la requête
+      });
+  
+      if (response.ok) {
+        console.log('Le refresh token a été révoqué avec succès.');
+      } else {
+        console.error('Erreur lors de la révocation du token');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+    }
+  };
+  
+
 const sendUserProfil = async (req, res, next) => {
     try {
         const userId = res.locals.userId; // Attention à utiliser `req.locals` si c'est ce que vous utilisez
@@ -130,9 +151,15 @@ const deleteUser = async (req, res, next) => {
         const userId = res.locals.userId
 
         const userDeleted = await User.deleteOne({ userId })
+        
         if (!userDeleted) {
             res.status(400).json({ success: false, message: "Utilisateur non trouvé" });
         } else {
+            try {
+                await revokeGoogleToken(userDeleted.refreshToken);
+            } catch(err) {
+                res.status(500)
+            }
             res.status(200).json({succes : true, message: "Utilisateur suprimé"})
         }
     } catch (err) {
