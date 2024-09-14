@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 const Profil = () => {
   const [userProfil, setUserProfil] = useState(null);  // État pour stocker les données utilisateur
   const [hoveredAlbum, setHoveredAlbum] = useState(null); // État pour suivre l'album survolé
+  const [showDeletePopup, setShowDeletePopup] = useState(false); // État pour afficher/masquer le pop-up de suppression
   const navigate = useNavigate(); // Hook pour la navigation
   const sessionToken = Cookies.get('sessionToken')
 
@@ -16,10 +17,10 @@ const Profil = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/userProfil`, {
         method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': sessionToken,
-      },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
+        },
         credentials: 'include',
       });
 
@@ -53,7 +54,6 @@ const Profil = () => {
       });
 
       if (response.ok) {
-        console.log("laaa")
         // Mettre à jour l'état local pour retirer l'album supprimé
         setUserProfil((prevProfil) => ({
           ...prevProfil,
@@ -61,6 +61,29 @@ const Profil = () => {
         }));
       } else {
         console.error('Erreur lors de la suppression de l\'album');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    // Supprimer le compte utilisateur
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/deleteUser`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': sessionToken,
+        },
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        // Rediriger après suppression du compte
+        navigate('/goodbye');
+      } else {
+        console.error('Erreur lors de la suppression du compte');
       }
     } catch (error) {
       console.error('Erreur:', error);
@@ -80,7 +103,15 @@ const Profil = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-5 w-4/5 md:w-1/2 lg:w-1/3 xl:w-1/4rounded shadow-md text-center flex flex-col items-center space-y-2">
+      <div className="bg-white p-5 w-4/5 md:w-1/2 lg:w-1/3 xl:w-1/4 rounded shadow-md text-center flex flex-col items-center space-y-2">
+        {/* Bouton pour supprimer le compte */}
+        <button
+          className="absolute top-5 left-5 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+          onClick={() => setShowDeletePopup(true)}
+        >
+          Supprimer le compte
+        </button>
+
         {/* Affichage de la photo de profil */}
         <img 
           src={userProfil.pictureUrl} 
@@ -140,6 +171,29 @@ const Profil = () => {
           )}
         </div>
       </div>
+
+      {/* Pop-up de confirmation pour la suppression du compte */}
+      {showDeletePopup && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+          <div className="bg-white p-6 rounded shadow-md text-center">
+            <h2 className="text-xl mb-4">Êtes-vous sûr de vouloir supprimer votre compte ?</h2>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={handleDeleteUser}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Oui
+              </button>
+              <button
+                onClick={() => setShowDeletePopup(false)}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Non
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
