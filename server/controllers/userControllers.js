@@ -125,6 +125,22 @@ const isAlbumCreatorMiddelware = async (req,res,next) => {
     })
 }
 
+const deleteUser = async (req, res, next) => {
+    try {
+        const userId = res.locals.userId
+
+        const userDeleted = await User.deleteOne({ userId })
+        if (!userDeleted) {
+            res.status(400).json({ success: false, message: "Utilisateur non trouvé" });
+        } else {
+            res.status(200).json({succes : true, message: "Utilisateur suprimé"})
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({succes:false, message:"erreur lors de la supression de l'utilisateur"})
+    }
+}
+
 const deleteAlbumFromUser = async (req, res, next) => {
     try {
         const albumId = req.body.albumId;
