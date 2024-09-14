@@ -102,7 +102,7 @@ const Profil = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-100 flex-col items-center justify-center">
       <div className="bg-white p-5 w-4/5 md:w-1/2 lg:w-1/3 xl:w-1/4 rounded shadow-md text-center flex flex-col items-center space-y-2">
         {/* Affichage de la photo de profil */}
         <img 

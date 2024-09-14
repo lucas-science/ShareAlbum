@@ -62,18 +62,18 @@ app.get('/image-proxy', async (req, res) => {
   }
 });
 
-app.deleteUser('/deleteUser', authControllers.isSessionValideMidlleware, userControllers.deleteUser)
+app.delete('/deleteUser', authControllers.isSessionValideMidlleware, userControllers.deleteUser)
 app.delete('/deleteAlbum', authControllers.isSessionValideMidlleware, userControllers.isAlbumCreatorMiddelware, driveControllers.deleteFolder, homeAlbumControllers.deleteAlbum, userControllers.deleteAlbumFromUser);
 app.post('/auth', authControllers.isSessionValide);
 app.post('/createNewHomeAlbum', authControllers.isSessionValideMidlleware, homeAlbumControllers.createNewHomeAlbum, driveControllers.isFolderAlreadyHere);
 
 // D'autres routes peuvent aller ici
 
-/*
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-*/
+
 
 module.exports = app;
