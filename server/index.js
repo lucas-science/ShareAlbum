@@ -62,6 +62,7 @@ app.get('/image-proxy', async (req, res) => {
   }
 });
 
+app.deleteUser('/deleteUser', authControllers.isSessionValideMidlleware, userControllers.deleteUser)
 app.delete('/deleteAlbum', authControllers.isSessionValideMidlleware, userControllers.isAlbumCreatorMiddelware, driveControllers.deleteFolder, homeAlbumControllers.deleteAlbum, userControllers.deleteAlbumFromUser);
 app.post('/auth', authControllers.isSessionValide);
 app.post('/createNewHomeAlbum', authControllers.isSessionValideMidlleware, homeAlbumControllers.createNewHomeAlbum, driveControllers.isFolderAlreadyHere);

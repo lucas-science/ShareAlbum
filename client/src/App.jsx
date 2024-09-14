@@ -12,6 +12,7 @@ import GoogleCallBack from './pages/GoogleCallBack';
 import PrivacyPolicy from './pages/Confidentialite';
 import TermsOfUse from './pages/ConditionUtilisation';
 import GetToken from './pages/GetToken';
+import GoodBye from './pages/GoodBye';
 
 import withAuth from './components/withAuth';
 
@@ -36,6 +37,7 @@ function App() {
         <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
         <Route path='/ConditionUtilisation' element={<TermsOfUse/>} />
         <Route path='/GetToken' element={<GetToken/>} />
+        <Route path='/GoodBye' element={<GoodBye/>} />
         <Route path='*' element={<NoPage/>} />
       </Routes>
     </Router>

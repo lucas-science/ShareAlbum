@@ -174,4 +174,4 @@ const deleteAlbumFromUser = async (req, res, next) => {
   
 
 
-module.exports = { addUser, sendUserProfil, isAlbumCreator, isAlbumCreatorMiddelware, deleteAlbumFromUser };
+module.exports = { addUser, sendUserProfil, isAlbumCreator, isAlbumCreatorMiddelware, deleteAlbumFromUser, deleteUser  };
