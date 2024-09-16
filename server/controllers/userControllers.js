@@ -1,3 +1,6 @@
+const qs = require('qs');
+const axios = require('axios');
+
 const User = require('../models/user');
 const Album = require('../models/album');  // Assurez-vous que ce modèle est correctement importé
 const jwt = require('jsonwebtoken');
@@ -129,14 +132,22 @@ const isAlbumCreatorMiddelware = async (req,res,next) => {
 // Fonction pour révoquer le refresh token via Google
 const revokeGoogleToken = async (refreshToken) => {
     try {
-        const response = await axios.post('https://oauth2.googleapis.com/revoke', null, {
-            params: {
-                token: refreshToken
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+        let data = qs.stringify({
+            'token': refreshToken
         });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://oauth2.googleapis.com/revoke',
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        };
+
+        const response = await axios.request(config);
+        console.log('Réponse de Google:', JSON.stringify(response.data));
 
         if (response.status === 200) {
             console.log('Le refresh token a été révoqué avec succès.');
