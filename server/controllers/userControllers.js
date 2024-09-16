@@ -3,27 +3,6 @@ const Album = require('../models/album');  // Assurez-vous que ce modèle est co
 const jwt = require('jsonwebtoken');
 
 
-const revokeGoogleToken = async (refreshToken) => {
-    try {
-      const response = await fetch('https://oauth2.googleapis.com/revoke', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `token=${refreshToken}`, // Inclure le refresh token dans le corps de la requête
-      });
-  
-      if (response.ok) {
-        console.log('Le refresh token a été révoqué avec succès.');
-      } else {
-        console.error('Erreur lors de la révocation du token');
-      }
-    } catch (error) {
-      console.error('Erreur:', error);
-    }
-  };
-  
-
 const sendUserProfil = async (req, res, next) => {
     try {
         const userId = res.locals.userId; // Attention à utiliser `req.locals` si c'est ce que vous utilisez
@@ -146,27 +125,61 @@ const isAlbumCreatorMiddelware = async (req,res,next) => {
     })
 }
 
-const fetch = require('node-fetch'); // Assure-toi d'avoir `node-fetch` installé pour faire des requêtes HTTP
 
-const deleteUser = async (req, res, next) => {
+// Fonction pour révoquer le refresh token via Google
+const revokeGoogleToken = async (refreshToken) => {
     try {
-        const userId = res.locals.userId;
+        const response = await axios.post('https://oauth2.googleapis.com/revoke', null, {
+            params: {
+                token: refreshToken
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
 
-        // Récupérer l'utilisateur pour obtenir son refreshToken
-        const user = await User.findOne({ userId });
-        if (!user) {
-            return res.status(400).json({ success: false, message: "Utilisateur non trouvé" });
+        if (response.status === 200) {
+            console.log('Le refresh token a été révoqué avec succès.');
+        } else {
+            console.error('Erreur lors de la révocation du token:', response.data);
         }
-
-        const refreshToken = user.googleRefreshToken; // Suppose que le refresh token est stocké ici
-
-        // Fonction pour révoquer le refresh token depuis Google
-        res.status(200).json(refreshToken)
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ success: false, message: "Erreur lors de la suppression de l'utilisateur" });
+    } catch (error) {
+        console.error('Erreur lors de la requête pour révoquer le token:', error);
     }
 };
+
+// Fonction pour supprimer un utilisateur et révoquer ses droits d'accès Google
+const deleteUser = async (req, res) => {
+    try {
+        const userId = res.locals.userId; // Récupère l'ID de l'utilisateur depuis la requête
+
+        // Récupérer l'utilisateur dans la base de données
+        const user = await User.findOne({ userId });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Utilisateur non trouvé" });
+        }
+
+        const refreshToken = user.refreshToken; // Supposons que le refresh token soit stocké dans l'utilisateur
+        
+        if (refreshToken) {
+            console.log(`Tentative de révocation du refresh token: ${refreshToken}`);
+            await revokeGoogleToken(refreshToken);
+        }
+
+        // Supprimer l'utilisateur de la base de données
+        const userDeleted = await User.deleteOne({ userId });
+
+        if (!userDeleted) {
+            return res.status(400).json({ success: false, message: "Erreur lors de la suppression de l'utilisateur" });
+        }
+
+        res.status(200).json({ success: true, message: "Utilisateur supprimé et droits d'accès révoqués" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: "Erreur serveur lors de la suppression de l'utilisateur" });
+    }
+};
+
 
 
 const deleteAlbumFromUser = async (req, res, next) => {
