@@ -161,39 +161,7 @@ const deleteUser = async (req, res, next) => {
         const refreshToken = user.googleRefreshToken; // Suppose que le refresh token est stocké ici
 
         // Fonction pour révoquer le refresh token depuis Google
-        const revokeGoogleToken = async (refreshToken) => {
-            try {
-                const response = await fetch('https://oauth2.googleapis.com/revoke', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `token=${refreshToken}`, // Le refresh token dans le corps de la requête
-                });
-
-                if (response.ok) {
-                    console.log('Le refresh token a été révoqué avec succès.');
-                } else {
-                    console.error('Erreur lors de la révocation du token:', await response.text());
-                }
-            } catch (error) {
-                console.error('Erreur lors de la requête pour révoquer le token:', error);
-            }
-        };
-
-        // Révoquer les droits d'accès au Google Drive si le refresh token existe
-        if (refreshToken) {
-            await revokeGoogleToken(refreshToken);
-        }
-
-        // Supprimer l'utilisateur de la base de données
-        const userDeleted = await User.deleteOne({ userId });
-
-        if (!userDeleted) {
-            res.status(400).json({ success: false, message: "Utilisateur non trouvé" });
-        } else {
-            res.status(200).json({ success: true, message: "Utilisateur supprimé et droits d'accès révoqués" });
-        }
+        res.status(200).json(refreshToken)
     } catch (err) {
         console.log(err);
         res.status(500).json({ success: false, message: "Erreur lors de la suppression de l'utilisateur" });
