@@ -43,15 +43,10 @@ export default function withAuth(ComponentToProtect) {
 
     if (loading) return (
       <div className="bg-gray-100 flex items-center justify-center min-h-screen space-x-4">
-      {/* Cercle 1 avec animation rapide */}
-      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-fast"></div>
-  
-      {/* Cercle 2 avec animation moyenne */}
-      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-medium"></div>
-  
-      {/* Cercle 3 avec animation lente */}
-      <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-slow"></div>
-    </div>
+        <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-fast"></div>
+        <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-medium"></div>
+        <div className="w-10 h-10 bg-blue-500 rounded-full animate-ping-slow"></div>
+      </div>
     );
     if (redirect) return <Navigate to={redirectTo} />;
     return <ComponentToProtect {...props} />;
